@@ -1,0 +1,303 @@
+
+
+---
+
+# **BUSINESS REQUIREMENT DOCUMENT (BRD)**
+
+## Sales & Customer Analytics Dashboard
+
+**Client:** Life Insurance
+**Project Type:** Power BI Analytics Implementation
+**Prepared By:** Business Analyst
+**Date:** March 2026
+
+---
+
+# 1. Executive Summary
+
+This document outlines the business requirements for the development of an enterprise-level Sales & Customer Analytics Dashboard using Power BI. The objective of this project is to provide leadership with real-time visibility into sales performance, agent productivity, product mix, policy persistency, claims ratio, and customer satisfaction (NPS).
+
+The dashboard will support data-driven decision-making at executive, regional, and branch levels.
+
+---
+
+# 2. Business Background
+
+The organization operates through multiple distribution channels including Bancassurance, Direct Sales, and Online channels across various regions in India.
+
+Current challenges:
+
+* Limited centralized visibility of sales KPIs
+* Manual reporting through Excel
+* Delayed performance insights
+* No integrated view of Sales, Claims, and Customer NPS
+* Difficulty in tracking policy lapse and persistency trends
+
+---
+
+# 3. Business Objectives
+
+1. Improve monitoring of Gross Written Premium (GWP) and APE growth.
+2. Increase policy persistency ratio (13th & 25th month).
+3. Enhance agent productivity and regional accountability.
+4. Reduce policy lapse rate.
+5. Monitor claims ratio and settlement trends.
+6. Improve customer satisfaction and NPS.
+
+---
+
+# 4. Project Scope
+
+## 4.1 In Scope
+
+* Sales performance dashboard
+* Agent performance monitoring
+* Product performance analysis
+* Claims ratio tracking
+* NPS tracking and segmentation
+* Time intelligence reporting (YTD, MoM, QoQ, YoY)
+* Drill-down capability (Region → Branch → Agent → Policy)
+
+## 4.2 Out of Scope
+
+* Changes to core policy administration systems
+* Real-time transaction processing
+* Regulatory compliance reporting
+* External partner reporting integrations
+
+---
+
+# 5. Stakeholders
+
+| Role               | Responsibility                       |
+| ------------------ | ------------------------------------ |
+| Sales Head         | Overall sales performance monitoring |
+| Regional Manager   | Regional sales accountability        |
+| Branch Manager     | Agent-level monitoring               |
+| Product Team       | Product mix & profitability          |
+| Risk & Claims Team | Claims ratio tracking                |
+| IT Team            | Data integration & refresh           |
+| Senior Management  | Strategic decision making            |
+
+---
+
+# 6. Requirement Analysis
+
+## 6.1 Functional Requirements
+
+FR-01: Dashboard must display executive summary with core KPIs.
+FR-02: Users must be able to filter by Region, Branch, Product, Date, and Channel.
+FR-03: Drill-down functionality from Region → Branch → Agent.
+FR-04: Dashboard must calculate APE based on payment mode.
+FR-05: Persistency Ratio must be calculated for 13th and 25th month cohorts.
+FR-06: Claim Ratio must be calculated as:
+
+Claim Ratio = Total Claims Paid / Total Premium Collected
+
+FR-07: NPS must be segmented as:
+
+* Promoters (9–10)
+* Passives (7–8)
+* Detractors (0–6)
+
+FR-08: Dashboard must support export to PDF and Excel.
+
+---
+
+## 6.2 Non-Functional Requirements
+
+* Data refresh frequency: Daily (Scheduled)
+* Dashboard load time: < 5 seconds
+* Role-based security implementation
+* Data model must follow Star Schema
+* System availability: 99%
+
+---
+
+# 7. Data Model Design
+
+The solution will use a **Star Schema Data Model** to ensure optimized performance and scalability.
+
+---
+
+## 7.1 Fact Tables
+
+### Fact_Sales
+
+* Policy_ID (PK)
+* Customer_ID (FK)
+* Agent_ID (FK)
+* Branch_ID (FK)
+* Product_ID (FK)
+* Policy_Date
+* Premium_Amount
+* APE
+* Payment_Mode
+* Policy_Status
+
+---
+
+### Fact_Claims
+
+* Claim_ID (PK)
+* Policy_ID (FK)
+* Claim_Date
+* Claim_Amount
+* Claim_Status
+
+---
+
+### Fact_NPS
+
+* Survey_ID (PK)
+* Customer_ID (FK)
+* NPS_Score
+* Survey_Date
+
+---
+
+## 7.2 Dimension Tables
+
+### Dim_Customer
+
+* Customer_ID (PK)
+* Age
+* Gender
+* City
+* Income_Bracket
+
+### Dim_Agent
+
+* Agent_ID (PK)
+* Agent_Name
+* Experience_Years
+* Channel
+* Branch_ID
+
+### Dim_Branch
+
+* Branch_ID (PK)
+* Branch_Name
+* Region
+* State
+
+### Dim_Product
+
+* Product_ID (PK)
+* Product_Name
+* Product_Type (Term / ULIP / Endowment / Retirement)
+* Risk_Category
+
+### Dim_Date
+
+* Date
+* Month
+* Quarter
+* Year
+* Financial_Year
+
+---
+
+# 8. Key Performance Indicators (KPIs)
+
+### Sales KPIs
+
+* Total Policies Sold
+* Gross Written Premium (GWP)
+* Annualized Premium Equivalent (APE)
+* Conversion Rate
+* Premium Growth %
+* YTD Sales
+
+### Customer KPIs
+
+* Net Promoter Score (NPS)
+* Retention Rate
+* Policy Lapse Rate
+
+### Risk KPIs
+
+* Claim Ratio
+* Claim Settlement Rate
+* Average Claim Amount
+
+### Productivity KPIs
+
+* Premium per Agent
+* Policies per Agent
+* Channel Contribution %
+
+---
+
+# 9. Dashboard Design Overview
+
+## Page 1 – Executive Summary
+
+* KPI cards
+* Monthly premium trend
+* Region contribution %
+* Claim ratio indicator
+
+## Page 2 – Sales Performance
+
+* Region vs Branch comparison
+* Agent ranking
+* Channel-wise contribution
+
+## Page 3 – Product Performance
+
+* Product mix
+* Lapse rate by product
+* APE by product
+
+## Page 4 – Customer & NPS
+
+* NPS distribution
+* NPS by product
+* Retention by age group
+
+---
+
+# 10. Acceptance Criteria
+
+The project will be considered successful when:
+
+1. All KPIs match validated sample calculations.
+2. Drill-down functionality works without data mismatch.
+3. Star schema relationships are correctly implemented.
+4. Role-based access control is tested and approved.
+5. Dashboard performance meets defined SLA.
+6. User Acceptance Testing (UAT) sign-off is received.
+
+---
+
+# 11. Risks & Mitigation
+
+| Risk                           | Mitigation                                     |
+| ------------------------------ | ---------------------------------------------- |
+| Inconsistent data definitions  | Standardize KPI definitions before development |
+| Data quality issues            | Implement validation rules                     |
+| Changing business requirements | Change request documentation                   |
+| Performance issues             | Optimize DAX and data model                    |
+
+---
+
+# 12. Assumptions
+
+* Historical data for at least 2 financial years is available.
+* Business KPI definitions are standardized.
+* Required access to source systems is provided.
+
+---
+
+# 13. Implementation Plan
+
+Phase 1 – Requirement Gathering
+Phase 2 – Data Understanding & Profiling
+Phase 3 – Data Modeling
+Phase 4 – DAX Development
+Phase 5 – Dashboard Development
+Phase 6 – UAT
+Phase 7 – Deployment & Monitoring
+
+
